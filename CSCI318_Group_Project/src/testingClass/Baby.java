@@ -14,7 +14,7 @@ public class Baby extends Dog {
     public int seconds;
 
     public Baby(PetStore pet_store, int age, String breed, int months_old, int seconds) {
-        super(pet_store, age, breed, months_old);
+        super(pet_store, age, breed);
         this.seconds = seconds;
     }
 
