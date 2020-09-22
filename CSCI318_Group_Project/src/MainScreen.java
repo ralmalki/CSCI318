@@ -136,6 +136,7 @@ public class MainScreen extends javax.swing.JFrame {
 
                 System.out.println("");
                 System.out.println("");
+                System.out.println("=-=-=-=-=-=");
 
                 //
                 dist(classes22, bird1.getClass(), dog2.getClass());
@@ -159,36 +160,55 @@ public class MainScreen extends javax.swing.JFrame {
         Field[] classAFields = a.getDeclaredFields();
         Field[] classBFields = b.getDeclaredFields();
         Field[] currentClassFields;
-        
+
+        //adds all the superclasses to an arraylist for access
+        ArrayList<Class<?>> superclasses = new ArrayList<Class<?>>();
         //for looping through superclass list
         Iterator<Class<?>> it = classes.iterator();
-
+        while (it.hasNext()) {
+            superclasses.add(it.next());
+        }
+        System.out.println("Arraylist: " + superclasses);
 
         Class<?> currentClass = null; //the current class
-        
+
+
         for (int i = 0; i < classAFields.length; i++) {
-            
-            currentClassFields = currentClass.getFields();
-            
+
             for (int j = 0; j < classBFields.length; j++) {
-                if (!(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()))) {
+                if (!(classAFields[i].equals(classBFields[j]))) {
                     System.out.println("--- Fieleds compared ---------------------" + classAFields[i].getName() + i + " === " + classBFields[j].getName() + j);
                     System.out.println(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()));
                     distance++;
                 }
+
             }
+ 
+            
+            //this loop checks the superclasses for the derived fields
+            for (int k = 0; k < superclasses.size()-1; k++) {
+                currentClass = superclasses.get(k);
+                System.out.println("TT: " + currentClass.getClass());
+                
+                if (currentClass == null) {
+                    break;
+                }
+                
+                currentClassFields = superclasses.get(k).getDeclaredFields();
+                if (!(classAFields[i].equals(currentClassFields[k]))) {
+                    System.out.println("--- Fieleds compared -------222--------------" + classAFields[i].getName() + i + " === " + currentClassFields[k].getName() + k);
+                    System.out.println(classAFields[i].getName().equals(currentClassFields[k].getName()) && classAFields[i].getType().equals(currentClassFields[k].getType()));
+                    distance++;
+                }
+ 
+            }
+            
+             
         }
 
         //this needs to go in the above check
         //loops through all superclasses. need to also check this in the above if statement. the attribute/methods could come from a superclass
-        while (it.hasNext()) {
-
-            currentClass = it.next();
-
-            System.out.println(currentClass.getSimpleName());
-
-        }
-
+        System.out.println("DISTANCE RESULT:" + distance);
         return distance;
     }
 
