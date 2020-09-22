@@ -125,7 +125,7 @@ public class MainScreen extends javax.swing.JFrame {
                 Dog dog2 = new Dog(new PetStore("Store2"), 22, "Doggo");
                 Puppy puppy1 = new Puppy(new PetStore("Store3"), 33, "Cutie", 12);
                 
-                int nonShared = distanceBetweenNonSharedFields(b1.getClass(), dog2.getClass());
+                int nonShared = distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
                 System.out.println("Check if two classes have different Fields " + nonShared);
 
                 Class<?> clazz = bird1.getClass();
@@ -159,30 +159,31 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     
-    static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
+  static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
         int distence = 0;
         
         System.out.println("--- Class A Gen superclass---------------------" + a.getGenericSuperclass());
-        
-        //First check if both classes have the same superclass
+        Field[] classAFields = a.getDeclaredFields();
+            Field[] classBFields = b.getDeclaredFields();
+            
+        //if the two class have the same super class add 2, 1 for each class. Need to check for other inhertince as will
+        /*
         if(haveSameSuperClass(a, b)){
-            Field[] classAFields = a.getFields();
-            Field[] classBFields = b.getFields();
-            
-            
-            for (Field classAField : classAFields) {
-                for (Field classBField : classBFields) {
-                    if(classAField.getName().equals(classBField.getName())){
-                        System.out.println("--- Class A Field---------------------" + classAField.getName());
-                        System.out.println("--- Class B Field---------------------" + classBField.getName());
+            distence += 2;
+        }
+        */
+        
+        //loop through the first class variables and compair it to the second class variables
+        //still need fixing
+        for(int i = 0; i < classAFields.length; i++){
+                for(int j = 0; j < classBFields.length; j++){
+                    if(!(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()))){
+                        System.out.println("--- Fieleds compared ---------------------" + classAFields[i].getName()+i + " === " + classBFields[j].getName()+j);
+                        System.out.println(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()));
                         distence++;
                     }
-//if(!(classAFields[i].getGenericType() == classBFields[j].getGenericType())){
-//    distence++;
-//}
                 }
             }
-        }
         
         return distence;
     }
