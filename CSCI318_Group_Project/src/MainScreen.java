@@ -35,12 +35,12 @@ public class MainScreen extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 950, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 542, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 542, Short.MAX_VALUE)
         );
 
         pack();
@@ -81,12 +81,12 @@ public class MainScreen extends javax.swing.JFrame {
                 //sample object testing list to use for comparison
                 PetStore ps1 = new PetStore("Store1");
                 PetStore ps2 = new PetStore("Store2");
-                
+
                 Bird bird1 = new Bird(ps1, 3, false);
                 Bird bird2 = new Bird(ps1, 1, false);
-                
+
                 Dog dog1 = new Dog(ps2, 10, "");
-                                
+
                 //Might need deep copy constructor??
                 Person p2 = null;
                 Person p1 = null;
@@ -94,13 +94,7 @@ public class MainScreen extends javax.swing.JFrame {
                 p1 = new Person("Steve", bird1, p2);
                 Person p3 = new Person("Jenna", null, p2);
                 Person p4 = new Person("Kelly", bird2, null);
-                
-                
-                
-                
-                
-                
-                
+
                 //working on code that gets all the fields of a class (inc inherited ones)
                 //needed for getting types and values for distance forumlas
                 Bird b1 = new Bird(new PetStore("Store1"), 11, false);
@@ -110,11 +104,7 @@ public class MainScreen extends javax.swing.JFrame {
                 //FieldDistance.compareObject(b1, b2);
 
                 Bird b3 = null;
-                
-                
-                
 
-                
                 Field[] fields = b1.getClass().getFields();
                 for (int i = 0; i < fields.length; i++) {
 //                    System.out.println("FIELD: " + fields[i].getName());
@@ -124,7 +114,7 @@ public class MainScreen extends javax.swing.JFrame {
 
                 Dog dog2 = new Dog(new PetStore("Store2"), 22, "Doggo");
                 Puppy puppy1 = new Puppy(new PetStore("Store3"), 33, "Cutie", 12);
-                
+
                 int nonShared = distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
                 System.out.println("Check if two classes have different Fields " + nonShared);
 
@@ -139,10 +129,16 @@ public class MainScreen extends javax.swing.JFrame {
                 //System.out.println(classes);
 
                 System.out.println("Common classes of " + classes + " :");
-                 Set<Class<?>> classes22 = commonSuperclasses(classes);
+                Set<Class<?>> classes22 = commonSuperclasses(classes);
                 System.out.println(classes22);
                 System.out.println("---");
                 System.out.println(lowestCommonSuperclasses(classes));
+
+                System.out.println("");
+                System.out.println("");
+
+                //
+                dist(classes22, bird1.getClass(), dog2.getClass());
 
                 //FieldDistance.totalFieldDistance(b1.getClass().getFields(), b2.getClass().getFields());
                 //System.out.println(mostSpecificCommonSuperclass(bird1.getClass(), dog2.getClass()));
@@ -157,40 +153,77 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-  static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
-        int distence = 0;
+
+    static int dist(Set<Class<?>> classes, Class<?> a, Class<?> b) {
+        int distance = 0;
+        Field[] classAFields = a.getDeclaredFields();
+        Field[] classBFields = b.getDeclaredFields();
+        Field[] currentClassFields;
         
+        //for looping through superclass list
+        Iterator<Class<?>> it = classes.iterator();
+
+
+        Class<?> currentClass = null; //the current class
+        
+        for (int i = 0; i < classAFields.length; i++) {
+            
+            currentClassFields = currentClass.getFields();
+            
+            for (int j = 0; j < classBFields.length; j++) {
+                if (!(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()))) {
+                    System.out.println("--- Fieleds compared ---------------------" + classAFields[i].getName() + i + " === " + classBFields[j].getName() + j);
+                    System.out.println(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()));
+                    distance++;
+                }
+            }
+        }
+
+        //this needs to go in the above check
+        //loops through all superclasses. need to also check this in the above if statement. the attribute/methods could come from a superclass
+        while (it.hasNext()) {
+
+            currentClass = it.next();
+
+            System.out.println(currentClass.getSimpleName());
+
+        }
+
+        return distance;
+    }
+
+    static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b) {
+        int distence = 0;
+
         System.out.println("--- Class A Gen superclass---------------------" + a.getGenericSuperclass());
         Field[] classAFields = a.getDeclaredFields();
-            Field[] classBFields = b.getDeclaredFields();
-            
+        Field[] classBFields = b.getDeclaredFields();
+
         //if the two class have the same super class add 2, 1 for each class. Need to check for other inhertince as will
         /*
         if(haveSameSuperClass(a, b)){
             distence += 2;
         }
-        */
-        
+         */
         //loop through the first class variables and compair it to the second class variables
         //still need fixing
-        for(int i = 0; i < classAFields.length; i++){
-                for(int j = 0; j < classBFields.length; j++){
-                    if(!(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()))){
-                        System.out.println("--- Fieleds compared ---------------------" + classAFields[i].getName()+i + " === " + classBFields[j].getName()+j);
-                        System.out.println(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()));
-                        distence++;
-                    }
+        for (int i = 0; i < classAFields.length; i++) {
+            for (int j = 0; j < classBFields.length; j++) {
+                if (!(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()))) {
+                    System.out.println("--- Fieleds compared ---------------------" + classAFields[i].getName() + i + " === " + classBFields[j].getName() + j);
+                    System.out.println(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()));
+                    distence++;
                 }
             }
-        
+        }
+
         return distence;
     }
-    
-    static boolean haveSameSuperClass(Class<?> a, Class<?> b){
-        if(a.getGenericSuperclass().equals(b.getGenericSuperclass()))
+
+    static boolean haveSameSuperClass(Class<?> a, Class<?> b) {
+        if (a.getGenericSuperclass().equals(b.getGenericSuperclass())) {
             return true;
+        }
         return false;
     }
 
@@ -232,7 +265,7 @@ public class MainScreen extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         return result;
     }
 
@@ -262,7 +295,6 @@ public class MainScreen extends javax.swing.JFrame {
         result.trimToSize();
         return result;
     }
-
 
     // Variables declaration - do not modify                     
     // End of variables declaration                   
