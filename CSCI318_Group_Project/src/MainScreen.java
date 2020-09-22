@@ -118,14 +118,14 @@ public class MainScreen extends javax.swing.JFrame {
                 int nonShared = distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
                 System.out.println("Check if two classes have different Fields " + nonShared);
 
-                Class<?> clazz = bird1.getClass();
+                Class<?> clazz = p1.getClass();
                 Class<?> clazz2 = dog2.getClass();
-                Class<?> clazz3 = puppy1.getClass();
+                //Class<?> clazz3 = puppy1.getClass();
 
                 Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
                 classes.add(clazz);
                 classes.add(clazz2);
-                classes.add(clazz3);
+                //classes.add(clazz3);
                 //System.out.println(classes);
 
                 System.out.println("Common classes of " + classes + " :");
@@ -139,7 +139,7 @@ public class MainScreen extends javax.swing.JFrame {
                 System.out.println("=-=-=-=-=-=");
 
                 //
-                dist(classes22, bird1.getClass(), dog2.getClass());
+                dist(classes22, p1.getClass(), dog2.getClass());
 
                 //FieldDistance.totalFieldDistance(b1.getClass().getFields(), b2.getClass().getFields());
                 //System.out.println(mostSpecificCommonSuperclass(bird1.getClass(), dog2.getClass()));
@@ -173,6 +173,7 @@ public class MainScreen extends javax.swing.JFrame {
         Class<?> currentClass = null; //the current class
 
 
+        //compares a to b fields
         for (int i = 0; i < classAFields.length; i++) {
 
             for (int j = 0; j < classBFields.length; j++) {
@@ -193,6 +194,12 @@ public class MainScreen extends javax.swing.JFrame {
                 if (currentClass == null) {
                     break;
                 }
+                
+                //need to loop through all of j too!!
+                //and after doing that the distance will be correct :D
+              
+
+            
                 
                 currentClassFields = superclasses.get(k).getDeclaredFields();
                 if (!(classAFields[i].equals(currentClassFields[k]))) {
