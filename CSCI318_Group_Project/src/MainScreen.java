@@ -1,3 +1,14 @@
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import testingClass.Bird;
+import testingClass.Dog;
+import testingClass.Person;
+import testingClass.PetStore;
+import testingClass.Puppy;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +22,7 @@
 public class MainScreen extends javax.swing.JFrame {
 
     /**
-     * Creates new form MainScreen
+     * Creates new form MainScreen2
      */
     public MainScreen() {
         initComponents();
@@ -32,11 +43,11 @@ public class MainScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
+            .addGap(0, 1152, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 542, Short.MAX_VALUE)
+            .addGap(0, 680, Short.MAX_VALUE)
         );
 
         pack();
@@ -68,13 +79,161 @@ public class MainScreen extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainScreen().setVisible(true);
+
+                //sample object testing list to use for comparison
+                PetStore ps1 = new PetStore("Store1");
+                PetStore ps2 = new PetStore("Store2");
+
+                Bird bird1 = new Bird(ps1, 3, false);
+                Bird bird2 = new Bird(ps1, 1, false);
+
+                Dog dog1 = new Dog(ps2, 10, "");
+
+                //Might need deep copy constructor??
+                Person p2 = null;
+                Person p1 = null;
+                p2 = new Person("Mary", dog1, p1);
+                p1 = new Person("Steve", bird1, p2);
+                Person p3 = new Person("Jenna", null, p2);
+                Person p4 = new Person("Kelly", bird2, null);
+
+                //working on code that gets all the fields of a class (inc inherited ones)
+                //needed for getting types and values for distance forumlas
+                Bird b1 = new Bird(new PetStore("Store1"), 11, false);
+                Bird b2 = new Bird(new PetStore("Store1"), 11, false);
+                //FieldDistance.compareObject(b1, b2);
+                b1 = b2;
+                //FieldDistance.compareObject(b1, b2);
+
+                Bird b3 = null;
+
+                Field[] fields = b1.getClass().getFields();
+                for (int i = 0; i < fields.length; i++) {
+//                    System.out.println("FIELD: " + fields[i].getName());
+//                    System.out.println("   Type: " + fields[i].getType());
+
+                }
+
+                Dog dog2 = new Dog(new PetStore("Store2"), 22, "Doggo");
+                Puppy puppy1 = new Puppy(new PetStore("Store3"), 33, "Cutie", 12);
+
+                int nonShared = TypeDistance.distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
+                System.out.println("Check if two classes have different Fields " + nonShared);
+
+               // Class<?> clazz = p1.getClass();
+                //Class<?> clazz2 = dog2.getClass();
+                //Class<?> clazz3 = puppy1.getClass();
+
+                //Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
+               //classes.add(clazz);
+               // classes.add(clazz2);
+                //classes.add(clazz3);
+                //System.out.println(classes);
+/*
+                System.out.println("Common classes of " + classes + " :");
+                Set<Class<?>> classes22 = commonSuperclasses(classes);
+                System.out.println(classes22);
+                System.out.println("---");
+                System.out.println(lowestCommonSuperclasses(classes));
+
+                System.out.println("");
+                System.out.println("");
+                System.out.println("=-=-=-=-=-=");
+*/
+                //
+               // dist(classes22, p1.getClass(), dog2.getClass());
+
+                //FieldDistance.totalFieldDistance(b1.getClass().getFields(), b2.getClass().getFields());
+                //System.out.println(mostSpecificCommonSuperclass(bird1.getClass(), dog2.getClass()));
+                // Class<?> klass = mostSpecificCommonSuperclass(bird1.getClass(), bird1.getClass());
+                //System.out.println(klass);
+                //System.out.println("DIST: " + ((int) TypeDistance.distanceToSuperclass(dog2.getClass(), klass) + (int) TypeDistance.distanceToSuperclass(bird1.getClass(), klass)));
+                /*
+                //thing for adding all distances together
+                p equiv q = sum of( typeDistance(p.type, q.type) + fieldDistance(p, q) + recursive_distance({[p.r equiv q.r]
+                    |  for all r in reference_attributes(p.type, q.type)}));
+                 */
             }
         });
+    }
+    
+
+    public static <T> double allDistances(T in){
+        double distSum = 0;
+        //distSum = TypeDistance
+        
+        
+        return distSum;
+    }
+
+    static int dist(Set<Class<?>> classes, Class<?> a, Class<?> b) {
+        int distance = 0;
+        Field[] classAFields = a.getDeclaredFields();
+        Field[] classBFields = b.getDeclaredFields();
+        Field[] currentClassFields;
+
+        //adds all the superclasses to an arraylist for access
+        ArrayList<Class<?>> superclasses = new ArrayList<Class<?>>();
+        //for looping through superclass list
+        Iterator<Class<?>> it = classes.iterator();
+        while (it.hasNext()) {
+            superclasses.add(it.next());
+        }
+        System.out.println("Arraylist: " + superclasses);
+
+        Class<?> currentClass = null; //the current class
+
+
+        //compares a to b fields
+        for (int i = 0; i < classAFields.length; i++) {
+
+            for (int j = 0; j < classBFields.length; j++) {
+                if (!(classAFields[i].equals(classBFields[j]))) {
+                    System.out.println("--- Fieleds compared ---------------------" + classAFields[i].getName() + i + " === " + classBFields[j].getName() + j);
+                    System.out.println(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()));
+                    distance++;
+                }
+
+            }
+ 
+            
+            //this loop checks the superclasses for the derived fields
+            for (int k = 0; k < superclasses.size()-1; k++) {
+                currentClass = superclasses.get(k);
+                System.out.println("TT: " + currentClass.getClass());
+                
+                if (currentClass == null) {
+                    break;
+                }
+                
+                //need to loop through all of j too!!
+                //and after doing that the distance will be correct :D
+              
+
+            
+                
+                currentClassFields = superclasses.get(k).getDeclaredFields();
+                if (!(classAFields[i].equals(currentClassFields[k]))) {
+                    System.out.println("--- Fieleds compared -------222--------------" + classAFields[i].getName() + i + " === " + currentClassFields[k].getName() + k);
+                    System.out.println(classAFields[i].getName().equals(currentClassFields[k].getName()) && classAFields[i].getType().equals(currentClassFields[k].getType()));
+                    distance++;
+                }
+ 
+            }
+            
+             
+        }
+
+        //this needs to go in the above check
+        //loops through all superclasses. need to also check this in the above if statement. the attribute/methods could come from a superclass
+        System.out.println("DISTANCE RESULT:" + distance);
+        return distance;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
