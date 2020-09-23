@@ -1,8 +1,10 @@
 
+import java.awt.Font;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
+import javax.swing.JTextArea;
 import testingClass.Bird;
 import testingClass.Dog;
 import testingClass.Person;
@@ -14,7 +16,6 @@ import testingClass.Puppy;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author David
@@ -37,21 +38,195 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textArea = new javax.swing.JTextArea();
+        startButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        start2 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        textArea.setColumns(20);
+        textArea.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
+
+        startButton.setText("Start");
+        startButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                startButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(504, 504, 504)
+                .addComponent(startButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(startButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
+        );
+
+        jTabbedPane1.addTab("Comparison", jPanel1);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        start2.setText("Begin");
+        start2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                start2MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 978, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(496, 496, 496)
+                        .addComponent(start2)))
+                .addContainerGap(84, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(start2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
+        );
+
+        jTabbedPane1.addTab("Recursion", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1152, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 680, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startButtonMouseClicked
+        textArea.setText(""); //resets text
+
+        textArea.append("Beginning comparisons....\n\n");
+        //sample object testing list to use for comparison
+        PetStore ps1 = new PetStore("Store1");
+        PetStore ps2 = new PetStore("Store2");
+
+        Bird bird1 = new Bird(ps1, 3, false);
+        Bird bird2 = new Bird(ps1, 1, false);
+
+        Dog dog1 = new Dog(ps2, 10, "");
+
+        //Might need deep copy constructor??
+        Person p2 = null;
+        Person p1 = null;
+        p2 = new Person("Mary", dog1, p1);
+        p1 = new Person("Steve", bird1, p2);
+        Person p3 = new Person("Jenna", null, p2);
+        Person p4 = new Person("Kelly", bird2, null);
+
+        textArea.append("Comparing object type distance of a Bird object to a Dog\n");
+        textArea.append("Distance between bird and dog is " + String.valueOf(TypeDistance.distanceBetweenNonSharedFields(dog1.getClass(), bird1.getClass())) + "\n");
+
+        textArea.append("\nField distance between two strings - 'Store1' and 'Store2'\n");
+        textArea.append("Distance of " + String.valueOf(FieldDistance.getDistance("Store1", "Store2"))); //can be changed to any string or typecast to number and run
+
+        textArea.append("\nField distance between two booleans - when equal\n");
+        textArea.append("Distance of " + String.valueOf(FieldDistance.getDistance(true, true)));
+
+        textArea.append("\n\nField distance between two booleans - when one is equal and the other false\n");
+        textArea.append("Distance of " + String.valueOf(FieldDistance.getDistance(true, false)));
+
+        textArea.append("\n\nField distance between two integers, 6 and -8\n");
+        textArea.append("Absolute distance of " + String.valueOf(FieldDistance.getDistance(6, -8)));
+
+        textArea.append("\n\nField distance between two doubles, 6.6 and -3.3\n");
+        textArea.append("Absolute distance of " + String.valueOf(FieldDistance.getDistance(6.6, -3.3)));
+
+        textArea.append("\n\nObject distance between two not equivalent objects, one of a type Person and one of type Dog\n");
+        textArea.append("Object distance of " + String.valueOf(FieldDistance.getDistance(p1, dog1)));
+
+
+    }//GEN-LAST:event_startButtonMouseClicked
+
+    private void start2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_start2MouseClicked
+        // TODO add your handling code here:
+        jTextArea1.setText("");
+
+        //sample object testing list to use for comparison
+        PetStore ps1 = new PetStore("Store1");
+        PetStore ps2 = new PetStore("Store2");
+
+        Bird bird1 = new Bird(ps1, 3, false);
+        Bird bird2 = new Bird(ps1, 1, false);
+
+        Dog dog1 = new Dog(ps2, 10, "");
+
+        //Might need deep copy constructor??
+        Person p2 = null;
+        Person p1 = null;
+        p2 = new Person("Mary", dog1, p1);
+        p1 = new Person("Steve", bird1, p2);
+        Person p3 = new Person("Jenna", null, p2);
+        Person p4 = new Person("Kelly", bird2, null);
+
+        jTextArea1.setText("Recursivly analysing object Person with details of:\n");
+        Field[] fields = p4.getClass().getDeclaredFields();
+        for (int i = 0; i < fields.length; i++) {
+            jTextArea1.append(String.valueOf(fields[i].getName() + " with type " + fields[i].getType()) + "\n");
+
+            //checks all fields for objects
+            if (!fields[i].getType().isPrimitive() && !fields[i].getType().isArray() && !fields[i].getType().getName().equals("java.lang.String")) {
+                Class<?> clazz = fields[i].getDeclaringClass();
+                
+                Field[] fields2 = clazz.getClass().getDeclaredFields();
+                for (int j = 0; j < fields2.length; j++) {
+                    jTextArea1.append(String.valueOf("\t " + fields[j].getName() + " with type " + fields[j].getType()) + "\n");
+                }
+               
+
+            }
+        }
+
+
+    }//GEN-LAST:event_start2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -103,6 +278,8 @@ public class MainScreen extends javax.swing.JFrame {
                 Person p3 = new Person("Jenna", null, p2);
                 Person p4 = new Person("Kelly", bird2, null);
 
+                //code here will be used for the demo!
+                //appendText("Comparing");
                 //working on code that gets all the fields of a class (inc inherited ones)
                 //needed for getting types and values for distance forumlas
                 Bird b1 = new Bird(new PetStore("Store1"), 11, false);
@@ -126,13 +303,15 @@ public class MainScreen extends javax.swing.JFrame {
                 int nonShared = TypeDistance.distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
                 System.out.println("Check if two classes have different Fields " + nonShared);
 
-               // Class<?> clazz = p1.getClass();
+                //testing
+                RecursiveDistance.distance(p1);
+
+                // Class<?> clazz = p1.getClass();
                 //Class<?> clazz2 = dog2.getClass();
                 //Class<?> clazz3 = puppy1.getClass();
-
                 //Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
-               //classes.add(clazz);
-               // classes.add(clazz2);
+                //classes.add(clazz);
+                // classes.add(clazz2);
                 //classes.add(clazz3);
                 //System.out.println(classes);
 /*
@@ -145,10 +324,9 @@ public class MainScreen extends javax.swing.JFrame {
                 System.out.println("");
                 System.out.println("");
                 System.out.println("=-=-=-=-=-=");
-*/
+                 */
                 //
-               // dist(classes22, p1.getClass(), dog2.getClass());
-
+                // dist(classes22, p1.getClass(), dog2.getClass());
                 //FieldDistance.totalFieldDistance(b1.getClass().getFields(), b2.getClass().getFields());
                 //System.out.println(mostSpecificCommonSuperclass(bird1.getClass(), dog2.getClass()));
                 // Class<?> klass = mostSpecificCommonSuperclass(bird1.getClass(), bird1.getClass());
@@ -162,13 +340,11 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
     }
-    
 
-    public static <T> double allDistances(T in){
+    public static <T> double allDistances(T in) {
         double distSum = 0;
-        //distSum = TypeDistance
-        
-        
+        distSum = RecursiveDistance.distance(in);
+
         return distSum;
     }
 
@@ -189,7 +365,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         Class<?> currentClass = null; //the current class
 
-
         //compares a to b fields
         for (int i = 0; i < classAFields.length; i++) {
 
@@ -201,33 +376,27 @@ public class MainScreen extends javax.swing.JFrame {
                 }
 
             }
- 
-            
+
             //this loop checks the superclasses for the derived fields
-            for (int k = 0; k < superclasses.size()-1; k++) {
+            for (int k = 0; k < superclasses.size() - 1; k++) {
                 currentClass = superclasses.get(k);
                 System.out.println("TT: " + currentClass.getClass());
-                
+
                 if (currentClass == null) {
                     break;
                 }
-                
+
                 //need to loop through all of j too!!
                 //and after doing that the distance will be correct :D
-              
-
-            
-                
                 currentClassFields = superclasses.get(k).getDeclaredFields();
                 if (!(classAFields[i].equals(currentClassFields[k]))) {
                     System.out.println("--- Fieleds compared -------222--------------" + classAFields[i].getName() + i + " === " + currentClassFields[k].getName() + k);
                     System.out.println(classAFields[i].getName().equals(currentClassFields[k].getName()) && classAFields[i].getType().equals(currentClassFields[k].getType()));
                     distance++;
                 }
- 
+
             }
-            
-             
+
         }
 
         //this needs to go in the above check
@@ -237,5 +406,14 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton start2;
+    private javax.swing.JButton startButton;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 }
