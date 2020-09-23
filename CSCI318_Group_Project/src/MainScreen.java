@@ -219,32 +219,43 @@ public class MainScreen extends javax.swing.JFrame {
         return distance;
     }
 
-    static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b) {
-        int distence = 0;
-
-        System.out.println("--- Class A Gen superclass---------------------" + a.getGenericSuperclass());
+    static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
+        int FiledsDistance = 0;
+        int MethodsDistance = 0;
+       
         Field[] classAFields = a.getDeclaredFields();
         Field[] classBFields = b.getDeclaredFields();
-
+        Method[] classAMethods = a.getDeclaredMethods();
+        Method[] classBMethods = b.getDeclaredMethods();
+            
         //if the two class have the same super class add 2, 1 for each class. Need to check for other inhertince as will
         /*
         if(haveSameSuperClass(a, b)){
             distence += 2;
         }
-         */
+        */
+        
         //loop through the first class variables and compair it to the second class variables
         //still need fixing
-        for (int i = 0; i < classAFields.length; i++) {
-            for (int j = 0; j < classBFields.length; j++) {
-                if (!(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()))) {
-                    System.out.println("--- Fieleds compared ---------------------" + classAFields[i].getName() + i + " === " + classBFields[j].getName() + j);
-                    System.out.println(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType()));
-                    distence++;
+        FiledsDistance = classAFields.length + classBFields.length;
+        for(int i = 0; i < classAFields.length; i++){
+                for(int j = 0; j < classBFields.length; j++){
+                    if(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType())){
+                        FiledsDistance--;
+                    }
+                }
+            }
+        //
+        MethodsDistance = classAMethods.length + classBMethods.length;
+        for(int i = 0; i < classAMethods.length; i++){
+            for(int j = 0; j < classBMethods.length; j++){
+                if(classAMethods[i].getName().equals(classBMethods[j].getName())){
+                    MethodsDistance--;
                 }
             }
         }
-
-        return distence;
+        
+        return FiledsDistance + MethodsDistance;
     }
 
     static boolean haveSameSuperClass(Class<?> a, Class<?> b) {
