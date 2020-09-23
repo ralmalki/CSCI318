@@ -55,6 +55,8 @@ public class TypeDistance {
         
         //gets difference between class objects (add methods soon)
         totalDistance += (((int) TypeDistance.distanceToSuperclass(a.getClass(), klass) + (int) TypeDistance.distanceToSuperclass(b.getClass(), klass)));
+        
+        //add field and method distance to totaldistance
 
         if (totalDistance == 0) {
             System.out.println("Objects and methods/attributes are exactly identical"); //debug
@@ -153,6 +155,7 @@ public class TypeDistance {
         }
         return result;
     }
+     
 
      //gets all common parents
     public static Set<Class<?>> commonSuperclasses(Iterable<Class<?>> classes) {
