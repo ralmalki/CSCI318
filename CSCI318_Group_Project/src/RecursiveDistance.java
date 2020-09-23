@@ -54,5 +54,36 @@ public class RecursiveDistance {
 */
         return distance;
     }
+    /*
+    public double recurseDistance(Class p1, Class p2, double prevDistance) {
+        double returnDistance = 0;
+        int commonFields = getCommonFields(p1, p2);
+        returnDistance = (1 / commonFields) * FieldDistance.getDistance(p1, p2) + (0.5 * recurseDistance(p1, p2, returnDistance) ;
+        return 0;
+    }
+    
+    public int getCommonFields(Class<?> obj1, Class<?> obj2) {
+        Field[] obj1Fields = obj1.getDeclaredFields();
+        Field[] obj2Fields = obj2.getDeclaredFields();
+        int commonFields = 0;
+        
+        
+        
+        
+        for(int i = 0; i < obj1Fields.length; i++) {
+            for(int j = 0; j < obj2Fields.length; j++) {
+                if(obj1Fields[i].getName().equals(obj2Fields[j].getName()) && obj1Fields[i].getType().equals(obj2Fields[j].getType())) {
+                    commonFields++;
+                    break;
+                }
+            }
+        }
+        
+        if(commonFields == 0) {
+            commonFields = 1;
+        }
+        return commonFields;
+    }
+    */
 
 }
