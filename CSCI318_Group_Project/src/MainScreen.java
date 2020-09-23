@@ -222,10 +222,6 @@ public class MainScreen extends javax.swing.JFrame {
 
     
 
-   
-
-    
-
     // Variables declaration - do not modify                     
     // End of variables declaration                   
 }

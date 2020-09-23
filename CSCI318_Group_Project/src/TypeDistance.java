@@ -133,6 +133,7 @@ public class TypeDistance {
         return FiledsDistance + MethodsDistance;
     }
     
+    //used by bbelow method
      public static Set<Class<?>> getSuperclasses(Class<?> clazz) {
         final Set<Class<?>> result = new LinkedHashSet<>();
         final Queue<Class<?>> queue = new ArrayDeque<>();
@@ -153,6 +154,7 @@ public class TypeDistance {
         return result;
     }
 
+     //gets all common parents
     public static Set<Class<?>> commonSuperclasses(Iterable<Class<?>> classes) {
         Iterator<Class<?>> it = classes.iterator();
         if (!it.hasNext()) {
@@ -175,6 +177,7 @@ public class TypeDistance {
         return result;
     }
     
+    /*
     public static List<Class<?>> lowestCommonSuperclasses(Iterable<Class<?>> classes) {
         Collection<Class<?>> commonSupers = commonSuperclasses(classes);
         return lowestClasses(commonSupers);
@@ -201,4 +204,5 @@ public class TypeDistance {
         result.trimToSize();
         return result;
     }
+*/
 }
