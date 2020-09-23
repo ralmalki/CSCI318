@@ -155,6 +155,15 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
     }
+    
+
+    public static <T> double allDistances(T in){
+        double distSum = 0;
+        //distSum = TypeDistance
+        
+        
+        return distSum;
+    }
 
     static int dist(Set<Class<?>> classes, Class<?> a, Class<?> b) {
         int distance = 0;
