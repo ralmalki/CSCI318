@@ -1,3 +1,18 @@
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -81,5 +96,109 @@ public class TypeDistance {
         }
         System.out.println("Path distance: " + differenceCount); //debug
         return differenceCount;
+    }
+    
+    
+    
+    static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
+        int FiledsDistance = 0;
+        int MethodsDistance = 0;
+       
+        Field[] classAFields = a.getDeclaredFields();
+        Field[] classBFields = b.getDeclaredFields();
+        Method[] classAMethods = a.getDeclaredMethods();
+        Method[] classBMethods = b.getDeclaredMethods();
+            
+       
+        //loop through the first class variables and compair it to the second class variables
+        //still need fixing
+        FiledsDistance = classAFields.length + classBFields.length;
+        for(int i = 0; i < classAFields.length; i++){
+                for(int j = 0; j < classBFields.length; j++){
+                    if(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType())){
+                        FiledsDistance--;
+                    }
+                }
+            }
+        //
+        MethodsDistance = classAMethods.length + classBMethods.length;
+        for(int i = 0; i < classAMethods.length; i++){
+            for(int j = 0; j < classBMethods.length; j++){
+                if(classAMethods[i].getName().equals(classBMethods[j].getName())){
+                    MethodsDistance--;
+                }
+            }
+        }
+        
+        return FiledsDistance + MethodsDistance;
+    }
+    
+     public static Set<Class<?>> getSuperclasses(Class<?> clazz) {
+        final Set<Class<?>> result = new LinkedHashSet<>();
+        final Queue<Class<?>> queue = new ArrayDeque<>();
+        queue.add(clazz);
+        if (clazz.isInterface()) {
+            queue.add(Object.class); // optional
+        }
+        while (!queue.isEmpty()) {
+            Class<?> c = queue.remove();
+            if (result.add(c)) {
+                Class<?> sup = c.getSuperclass();
+                if (sup != null) {
+                    queue.add(sup);
+                }
+                queue.addAll(Arrays.asList(c.getInterfaces()));
+            }
+        }
+        return result;
+    }
+
+    public static Set<Class<?>> commonSuperclasses(Iterable<Class<?>> classes) {
+        Iterator<Class<?>> it = classes.iterator();
+        if (!it.hasNext()) {
+            return Collections.emptySet();
+        }
+        // begin with set from first hierarchy
+        Set<Class<?>> result = getSuperclasses(it.next());
+        // remove non-superclasses of remaining
+        while (it.hasNext()) {
+            Class<?> c = it.next();
+            Iterator<Class<?>> resultIt = result.iterator();
+            while (resultIt.hasNext()) {
+                Class<?> sup = resultIt.next();
+                if (!sup.isAssignableFrom(c)) {
+                    resultIt.remove();
+                }
+            }
+        }
+
+        return result;
+    }
+    
+    public static List<Class<?>> lowestCommonSuperclasses(Iterable<Class<?>> classes) {
+        Collection<Class<?>> commonSupers = commonSuperclasses(classes);
+        return lowestClasses(commonSupers);
+    }
+
+    public static List<Class<?>> lowestClasses(Collection<Class<?>> classes) {
+        final LinkedList<Class<?>> source = new LinkedList<>(classes);
+        final ArrayList<Class<?>> result = new ArrayList<>(classes.size());
+        while (!source.isEmpty()) {
+            Iterator<Class<?>> srcIt = source.iterator();
+            Class<?> c = srcIt.next();
+            srcIt.remove();
+            while (srcIt.hasNext()) {
+                Class<?> c2 = srcIt.next();
+                if (c2.isAssignableFrom(c)) {
+                    srcIt.remove();
+                } else if (c.isAssignableFrom(c2)) {
+                    c = c2;
+                    srcIt.remove();
+                }
+            }
+            result.add(c);
+        }
+        result.trimToSize();
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 import testingClass.*;
 
@@ -115,19 +116,19 @@ public class MainScreen extends javax.swing.JFrame {
                 Dog dog2 = new Dog(new PetStore("Store2"), 22, "Doggo");
                 Puppy puppy1 = new Puppy(new PetStore("Store3"), 33, "Cutie", 12);
 
-                int nonShared = distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
+                int nonShared = TypeDistance.distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
                 System.out.println("Check if two classes have different Fields " + nonShared);
 
-                Class<?> clazz = p1.getClass();
-                Class<?> clazz2 = dog2.getClass();
+               // Class<?> clazz = p1.getClass();
+                //Class<?> clazz2 = dog2.getClass();
                 //Class<?> clazz3 = puppy1.getClass();
 
-                Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
-                classes.add(clazz);
-                classes.add(clazz2);
+                //Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
+               //classes.add(clazz);
+               // classes.add(clazz2);
                 //classes.add(clazz3);
                 //System.out.println(classes);
-
+/*
                 System.out.println("Common classes of " + classes + " :");
                 Set<Class<?>> classes22 = commonSuperclasses(classes);
                 System.out.println(classes22);
@@ -137,9 +138,9 @@ public class MainScreen extends javax.swing.JFrame {
                 System.out.println("");
                 System.out.println("");
                 System.out.println("=-=-=-=-=-=");
-
+*/
                 //
-                dist(classes22, p1.getClass(), dog2.getClass());
+               // dist(classes22, p1.getClass(), dog2.getClass());
 
                 //FieldDistance.totalFieldDistance(b1.getClass().getFields(), b2.getClass().getFields());
                 //System.out.println(mostSpecificCommonSuperclass(bird1.getClass(), dog2.getClass()));
@@ -219,120 +220,11 @@ public class MainScreen extends javax.swing.JFrame {
         return distance;
     }
 
-    static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
-        int FiledsDistance = 0;
-        int MethodsDistance = 0;
-       
-        Field[] classAFields = a.getDeclaredFields();
-        Field[] classBFields = b.getDeclaredFields();
-        Method[] classAMethods = a.getDeclaredMethods();
-        Method[] classBMethods = b.getDeclaredMethods();
-            
-        //if the two class have the same super class add 2, 1 for each class. Need to check for other inhertince as will
-        /*
-        if(haveSameSuperClass(a, b)){
-            distence += 2;
-        }
-        */
-        
-        //loop through the first class variables and compair it to the second class variables
-        //still need fixing
-        FiledsDistance = classAFields.length + classBFields.length;
-        for(int i = 0; i < classAFields.length; i++){
-                for(int j = 0; j < classBFields.length; j++){
-                    if(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType())){
-                        FiledsDistance--;
-                    }
-                }
-            }
-        //
-        MethodsDistance = classAMethods.length + classBMethods.length;
-        for(int i = 0; i < classAMethods.length; i++){
-            for(int j = 0; j < classBMethods.length; j++){
-                if(classAMethods[i].getName().equals(classBMethods[j].getName())){
-                    MethodsDistance--;
-                }
-            }
-        }
-        
-        return FiledsDistance + MethodsDistance;
-    }
+    
 
-    static boolean haveSameSuperClass(Class<?> a, Class<?> b) {
-        if (a.getGenericSuperclass().equals(b.getGenericSuperclass())) {
-            return true;
-        }
-        return false;
-    }
+   
 
-    public static Set<Class<?>> getSuperclasses(Class<?> clazz) {
-        final Set<Class<?>> result = new LinkedHashSet<>();
-        final Queue<Class<?>> queue = new ArrayDeque<>();
-        queue.add(clazz);
-        if (clazz.isInterface()) {
-            queue.add(Object.class); // optional
-        }
-        while (!queue.isEmpty()) {
-            Class<?> c = queue.remove();
-            if (result.add(c)) {
-                Class<?> sup = c.getSuperclass();
-                if (sup != null) {
-                    queue.add(sup);
-                }
-                queue.addAll(Arrays.asList(c.getInterfaces()));
-            }
-        }
-        return result;
-    }
-
-    public static Set<Class<?>> commonSuperclasses(Iterable<Class<?>> classes) {
-        Iterator<Class<?>> it = classes.iterator();
-        if (!it.hasNext()) {
-            return Collections.emptySet();
-        }
-        // begin with set from first hierarchy
-        Set<Class<?>> result = getSuperclasses(it.next());
-        // remove non-superclasses of remaining
-        while (it.hasNext()) {
-            Class<?> c = it.next();
-            Iterator<Class<?>> resultIt = result.iterator();
-            while (resultIt.hasNext()) {
-                Class<?> sup = resultIt.next();
-                if (!sup.isAssignableFrom(c)) {
-                    resultIt.remove();
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public static List<Class<?>> lowestCommonSuperclasses(Iterable<Class<?>> classes) {
-        Collection<Class<?>> commonSupers = commonSuperclasses(classes);
-        return lowestClasses(commonSupers);
-    }
-
-    public static List<Class<?>> lowestClasses(Collection<Class<?>> classes) {
-        final LinkedList<Class<?>> source = new LinkedList<>(classes);
-        final ArrayList<Class<?>> result = new ArrayList<>(classes.size());
-        while (!source.isEmpty()) {
-            Iterator<Class<?>> srcIt = source.iterator();
-            Class<?> c = srcIt.next();
-            srcIt.remove();
-            while (srcIt.hasNext()) {
-                Class<?> c2 = srcIt.next();
-                if (c2.isAssignableFrom(c)) {
-                    srcIt.remove();
-                } else if (c.isAssignableFrom(c2)) {
-                    c = c2;
-                    srcIt.remove();
-                }
-            }
-            result.add(c);
-        }
-        result.trimToSize();
-        return result;
-    }
+    
 
     // Variables declaration - do not modify                     
     // End of variables declaration                   

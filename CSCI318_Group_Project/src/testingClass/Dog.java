@@ -17,5 +17,9 @@ public class Dog extends Animal {
         super(pet_store, age);
         this.breed = breed;
     }
+    
+    public String getBreed() {
+        return breed;
+    }
 
 }

@@ -20,5 +20,9 @@ public class Person {
         this.animal = animal;
         this.spouse = spouse;
     }
+    
+    public String getName(){
+        return name;
+    }
 
 }
