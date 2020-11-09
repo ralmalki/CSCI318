@@ -260,6 +260,34 @@ public class MainScreen extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainScreen().setVisible(true);
+                //algorithm that will call all functions
+                /*
+                used_objects: SET [ANY]
+                candidate_objects: SET [ANY]
+                current_best_distance: DOUBLE
+                current_best_object: ANY
+                v0, v1: ANY
+                current_accumulation: DOUBLE
+                ...
+                current_best_distance := 0.0;
+                foreach v0 in candidate_objects
+                do
+                current_accumulation := 0.0;
+                foreach v1 in used_objects
+                do
+                current_accumulation :=
+                current_accumulation + distance(v0, v1);
+                end
+                if (current_accumulation > current_best_distance)
+                then
+                current_best_distance := current_accumulation;
+                current_best_object := v0;
+                end
+                end
+                candidate_objects.remove(v0);
+                used_objects.add(v0);
+                run_test(v0);
+                */
 
                 //sample object testing list to use for comparison
                 PetStore ps1 = new PetStore("Store1");
