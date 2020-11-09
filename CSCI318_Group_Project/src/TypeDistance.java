@@ -45,7 +45,7 @@ import java.util.Set;
 public class TypeDistance {
 
     //gets sum of all type distances
-    public static <T, K> double totalTypeDistance(T a, K b) { //input is two OBBJECTS
+    public static <T, K> double totalTypeDistance(T a, K b) { //input is two OBBJECTS..
         //return o.getClass().getSimpleName();
         double totalDistance = 0;
 
@@ -84,7 +84,7 @@ public class TypeDistance {
     //https://stackoverflow.com/questions/9797212/finding-the-nearest-common-superclass-or-superinterface-of-a-collection-of-cla
 
     //gets common class to both given objects and calulates/returns distance
-    static int distanceToSuperclass(Class<?> a, Class<?> b) {
+    static int distanceToSuperclass(Class<?> a, Class<?> b) {        
         Class<?> s = a;
         int differenceCount = 0;
         //if of same type, equal. Therefore distance = 0
@@ -104,11 +104,17 @@ public class TypeDistance {
         return differenceCount;
     }
     
-    //still needs work
+    //still needs work to function on superclassses
     //gets the distance between BOTH methods and fields of two classes.
     static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
         int FiledsDistance = 0;
         int MethodsDistance = 0;
+
+        //while not a type of java.object 
+        //current
+        while (!(a.getSuperclass()!=null)) {      //avoids Obbject.class      
+            
+        }
        
         Field[] classAFields = a.getDeclaredFields();
         Field[] classBFields = b.getDeclaredFields();
@@ -144,6 +150,29 @@ public class TypeDistance {
         
         return FiledsDistance + MethodsDistance;
     }
+    
+    //gets all fields inc super?
+    static <T> List<Field> getFields(T t) {
+        List<Field> fields = new ArrayList<>();
+        Class clazz = t.getClass();
+        while (clazz != Object.class) {
+            fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+            clazz = clazz.getSuperclass();
+        }
+        
+        for (Field value: fields)
+        {
+            System.out.println(value.getName());
+        }
+
+        
+        
+        return fields;
+    }
+    
+    
+    
+    
     
     //used by bbelow method
      public static Set<Class<?>> getSuperclasses(Class<?> clazz) {
