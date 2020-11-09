@@ -45,18 +45,19 @@ import java.util.Set;
 public class TypeDistance {
 
     //gets sum of all type distances
-    public static <T, K> double totalTypeDistance(T a, K b) {
+    public static <T, K> double totalTypeDistance(T a, K b) { //input is two OBBJECTS
         //return o.getClass().getSimpleName();
         double totalDistance = 0;
 
         //gets common class
         Class<?> klass = mostSpecificCommonSuperclass(a.getClass(), b.getClass());
-        System.out.println(klass); //debug
+        System.out.println("Common klass: " + klass); //debug
         
         //gets difference between class objects (add methods soon)
-        totalDistance += (((int) TypeDistance.distanceToSuperclass(a.getClass(), klass) + (int) TypeDistance.distanceToSuperclass(b.getClass(), klass)));
+        totalDistance += (((int) distanceToSuperclass(a.getClass(), klass) + (int) distanceToSuperclass(b.getClass(), klass)));
         
-        //add field and method distance to totaldistance
+        //add field and method distance to totaldistance HERE
+        
 
         if (totalDistance == 0) {
             System.out.println("Objects and methods/attributes are exactly identical"); //debug
@@ -86,17 +87,19 @@ public class TypeDistance {
         Class<?> s = a;
         int differenceCount = 0;
         //if of same type, equal. Therefore distance = 0
-        if (a.getClass() == b.getClass()) {
-            System.out.println("Match, classes equal");
+        if (a.getName()== b.getName()) {
+            System.out.print("Match, classes equal -->");
+            System.out.println(String.valueOf(a.getName()) + " " + String.valueOf(b.getName()));
             return differenceCount;
         }
+        //goes to next superclass up
         while (!s.isAssignableFrom(b)) {
             //System.out.println("BEFORE:" + s);
             s = s.getSuperclass();
             //System.out.println("after:" + s);
             differenceCount++;
         }
-        System.out.println("Path distance: " + differenceCount); //debug
+        //System.out.println("Path distance: " + differenceCount); //debug
         return differenceCount;
     }
     

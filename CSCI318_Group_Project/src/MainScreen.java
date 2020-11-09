@@ -163,7 +163,7 @@ public class MainScreen extends javax.swing.JFrame {
         Person p4 = new Person("Kelly", bird2, null);
 
         textArea.append("Comparing object type distance of a Bird object to a Dog\n");
-        textArea.append("Distance between bird and dog is " + String.valueOf(TypeDistance.distanceBetweenNonSharedFields(dog1.getClass(), bird1.getClass())) + "\n");
+        textArea.append("Distance between bird and dog is " + String.valueOf(TypeDistance.distanceToSuperclass(dog1.getClass(), bird1.getClass())) + "\n");
 
         textArea.append("\nField distance between two strings - 'Store1' and 'Store2'\n");
         textArea.append("Distance of " + String.valueOf(FieldDistance.getDistance("Store1", "Store2"))); //can be changed to any string or typecast to number and run
@@ -297,6 +297,8 @@ public class MainScreen extends javax.swing.JFrame {
                 Bird bird2 = new Bird(ps1, 1, false);
 
                 Dog dog1 = new Dog(ps2, 10, "");
+                
+                System.out.println("Dist bbetween bird and dog:" + String.valueOf(TypeDistance.totalTypeDistance(dog1, bird1)));
 
                 //Might need deep copy constructor??
                 Person p2 = null;
@@ -328,11 +330,11 @@ public class MainScreen extends javax.swing.JFrame {
                 Dog dog2 = new Dog(new PetStore("Store2"), 22, "Doggo");
                 Puppy puppy1 = new Puppy(new PetStore("Store3"), 33, "Cutie", 12);
 
-                int nonShared = TypeDistance.distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
-                System.out.println("Check if two classes have different Fields " + nonShared);
+                //int nonShared = TypeDistance.distanceBetweenNonSharedFields(p3.getClass(), dog2.getClass());
+                //System.out.println("Check if two classes have different Fields " + nonShared);
 
                 //testing
-                RecursiveDistance.distance(p1);
+                //RecursiveDistance.distance(p1);
 
                 // Class<?> clazz = p1.getClass();
                 //Class<?> clazz2 = dog2.getClass();
