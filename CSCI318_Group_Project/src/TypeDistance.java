@@ -57,7 +57,8 @@ public class TypeDistance {
         totalDistance += (((int) distanceToSuperclass(a.getClass(), klass) + (int) distanceToSuperclass(b.getClass(), klass)));
         
         //add field and method distance to totaldistance HERE
-        
+        System.out.println("FIELD DIST: " + String.valueOf(distanceBetweenNonSharedFields(a.getClass(), b.getClass())));
+        //totalDistance += (distanceBetweenNonSharedFields(a.getClass(), b.getClass()));
 
         if (totalDistance == 0) {
             System.out.println("Objects and methods/attributes are exactly identical"); //debug
@@ -103,8 +104,8 @@ public class TypeDistance {
         return differenceCount;
     }
     
-    
-    
+    //still needs work
+    //gets the distance between BOTH methods and fields of two classes.
     static int distanceBetweenNonSharedFields(Class<?> a, Class<?> b){
         int FiledsDistance = 0;
         int MethodsDistance = 0;
@@ -113,6 +114,10 @@ public class TypeDistance {
         Field[] classBFields = b.getDeclaredFields();
         Method[] classAMethods = a.getDeclaredMethods();
         Method[] classBMethods = b.getDeclaredMethods();
+        
+        for (int i = 0; i < classAFields.length; i++) {
+            System.out.println(classAFields[i].getName());
+        }
             
        
         //loop through the first class variables and compair it to the second class variables
@@ -122,6 +127,7 @@ public class TypeDistance {
                 for(int j = 0; j < classBFields.length; j++){
                     if(classAFields[i].getName().equals(classBFields[j].getName()) && classAFields[i].getType().equals(classBFields[j].getType())){
                         FiledsDistance--;
+                        
                     }
                 }
             }
@@ -131,6 +137,7 @@ public class TypeDistance {
             for(int j = 0; j < classBMethods.length; j++){
                 if(classAMethods[i].getName().equals(classBMethods[j].getName())){
                     MethodsDistance--;
+                    System.out.println(classAMethods[i].getName());
                 }
             }
         }

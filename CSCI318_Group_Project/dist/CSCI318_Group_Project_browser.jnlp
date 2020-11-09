@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="CSCI318_Group_Project.jar" size="18399" download="eager" />
+    <jar href="CSCI318_Group_Project.jar" size="18488" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="MainScreen"  name="CSCI318_Group_Project" >
   </applet-desc>
