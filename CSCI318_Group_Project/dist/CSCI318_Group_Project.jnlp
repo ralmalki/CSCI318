@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="CSCI318_Group_Project.jnlp">
+  <information>
+    <title>CSCI318_Group_Project</title>
+    <vendor>David</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="CSCI318_Group_Project.jar" size="18411" download="eager" />
+  </resources>
+  <application-desc main-class="MainScreen"  name="CSCI318_Group_Project" >
+  </application-desc>
+  <update check="always"/>
+</jnlp>
